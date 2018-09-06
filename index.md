@@ -1,7 +1,6 @@
 ---
 layout: page
 ---
-<meta name="flattr:id" content="menejj">
 <img class="imgme" src="/images/me.png">
 
 Hi, my name is Jan-Hendrik Peters but most people will know me as Henner.
