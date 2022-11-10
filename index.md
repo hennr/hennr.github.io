@@ -37,4 +37,5 @@ I was one of the initiators of this FSFE campaign which we started to push free 
 
 #### Contact
 
-If you want to communicate in private with me please fetch [my PGP key](/Jan-Hendrik Peters hennr@hennr.name (0xE0EA0783) pub.asc) and mail me at <a href="http://www.google.com/recaptcha/mailhide/d?k=01_cAIRTgU6dUbhUO6qG0aig==&amp;c=dxfgVVsUi9xVc9ylq1r4RDbAkPjpZOp2nsgEXB0VdMs=" onclick="window.open('http://www.google.com/recaptcha/mailhide/d?k\07501_cAIRTgU6dUbhUO6qG0aig\75\75\46c\75dxfgVVsUi9xVc9ylq1r4RDbAkPjpZOp2nsgEXB0VdMs\075', '', 'toolbar=0,scrollbars=0,location=0,statusbar=0,menubar=0,resizable=0,width=500,height=300'); return false;" title="Reveal this e-mail address">h...@hennr.name</a>
+If you want to communicate in private with me please fetch [my PGP key](/Jan-Hendrik Peters hennr@hennr.name (0xE0EA0783) pub.asc) and mail me at
+  <a href="https://mailhide.io/e/hfnziE5N" onclick="popup=window.open('https://mailhide.io/e/hfnziE5N','mailhidepopup','width=580,height=635'); return false;">h......@hennr.name</a>
