@@ -4,7 +4,7 @@ layout: page
 <img class="imgme" src="/images/me.png">
 
 Hi, my name is Jan-Hendrik Peters but most people will know me as Henner.
-I am a software developer from Berlin, Germany working at <a href="http://www.idealo.de/">idealo</a> at the moment.
+I am a software developer from Berlin, Germany working at <a href="https://www.idealo.de/">idealo</a> at the moment.
 
 
 I enjoy rowing, climbing and of course writing software or help maintaining it.
