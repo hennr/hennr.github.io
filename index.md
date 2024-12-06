@@ -11,9 +11,6 @@ I enjoy rowing, climbing and of course writing software or help maintaining it.
 
 Below you will find some things I did so far.
 
-#### [blog](/posts)
-Mostly technical notes for myself to remember but probably they will help someone else, too. 
-
 #### [marabou audio tagger](https://github.com/hennr/marabou)
 
 I wrote a cross-platform audio tagger in Java which is similar to mp3tag.
