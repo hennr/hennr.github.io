@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#0b1020">
+    <meta name="description" content="löppt">
+    <title>hennr.name</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230b1020'/%3E%3Cpath d='M15 13h10v14h14V13h10v38H39V36H25v15H15z' fill='%23b8ff45'/%3E%3C/svg%3E">
+    <style>
+      :root {
+        color-scheme: dark;
+        --bg: radial-gradient(circle at 50% 42%, #172960 0%, #0b1535 43%, #050915 100%);
+        --ink: #f7f9ff;
+      }
+
+      * { box-sizing: border-box; }
+
+      html,
+      body {
+        width: 100%;
+        min-height: 100%;
+        margin: 0;
+      }
+
+      body {
+        min-height: 100svh;
+        overflow: hidden;
+        display: grid;
+        place-items: center;
+        background: var(--bg);
+        cursor: default;
+        touch-action: none;
+        user-select: none;
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      main {
+        display: grid;
+        place-items: center;
+        width: 100%;
+        min-height: 100svh;
+        isolation: isolate;
+      }
+
+      h1 {
+        position: relative;
+        z-index: 1;
+        margin: 0;
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        font-size: clamp(5.4rem, 21vw, 18rem);
+        font-weight: 820;
+        line-height: .74;
+        letter-spacing: -0.078em;
+      }
+
+      .word__face,
+      .word__shadow {
+        display: block;
+      }
+
+      .word__face {
+        position: relative;
+        z-index: 4;
+        color: var(--ink);
+      }
+
+      .word__shadow {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        backface-visibility: hidden;
+        will-change: transform;
+      }
+
+      .word__shadow--soft {
+        z-index: 1;
+        color: rgba(0, 0, 0, .68);
+        filter: blur(16px);
+        transform: translate3d(18px, 28px, 0);
+      }
+
+      .word__shadow--violet {
+        z-index: 2;
+        color: rgba(82, 72, 255, .42);
+        transform: translate3d(8.64px, 13.44px, 0);
+      }
+
+      .word__shadow--cyan {
+        z-index: 3;
+        color: rgba(117, 234, 255, .8);
+        transform: translate3d(3.24px, 5.04px, 0);
+      }
+
+      @media (max-width: 520px) {
+        h1 { font-size: clamp(5rem, 29vw, 9rem); }
+      }
+
+    </style>
+  </head>
+  <body>
+    <main aria-labelledby="word">
+      <h1 id="word" aria-label="löppt">
+        <span class="word__shadow word__shadow--soft" aria-hidden="true">löppt</span>
+        <span class="word__shadow word__shadow--violet" aria-hidden="true">löppt</span>
+        <span class="word__shadow word__shadow--cyan" aria-hidden="true">löppt</span>
+        <span class="word__face" aria-hidden="true">löppt</span>
+      </h1>
+    </main>
+
+    <script>
+      (() => {
+        const softShadow = document.querySelector('.word__shadow--soft');
+        const violetShadow = document.querySelector('.word__shadow--violet');
+        const cyanShadow = document.querySelector('.word__shadow--cyan');
+        const hasTouchInput = matchMedia('(pointer: coarse)').matches || navigator.maxTouchPoints > 0;
+        let targetX = 0.32;
+        let targetY = 0.42;
+        let currentX = targetX;
+        let currentY = targetY;
+        let touchActive = false;
+        let orientationListening = false;
+        let baseBeta = null;
+        let baseGamma = null;
+
+        const clamp = (value) => Math.max(-1, Math.min(1, value));
+
+        const setPointer = (x, y) => {
+          targetX = clamp((x / innerWidth - 0.5) * 2);
+          targetY = clamp((y / innerHeight - 0.5) * 2);
+        };
+
+        const handleOrientation = (event) => {
+          if (touchActive || event.beta === null || event.gamma === null) return;
+
+          if (baseBeta === null || baseGamma === null) {
+            baseBeta = event.beta;
+            baseGamma = event.gamma;
+            return;
+          }
+
+          let x = clamp((event.gamma - baseGamma) / 25);
+          let y = clamp((event.beta - baseBeta) / 25);
+          const angle = screen.orientation?.angle ?? window.orientation ?? 0;
+
+          if (angle === 90) [x, y] = [y, -x];
+          if (angle === -90 || angle === 270) [x, y] = [-y, x];
+
+          targetX = x;
+          targetY = y;
+        };
+
+        const enableOrientation = () => {
+          if (orientationListening) return;
+          orientationListening = true;
+          window.addEventListener('deviceorientation', handleOrientation, true);
+        };
+
+        const animate = () => {
+          currentX += (targetX - currentX) * 0.12;
+          currentY += (targetY - currentY) * 0.12;
+
+          const shadowX = -currentX * 30;
+          const shadowY = 22 - currentY * 12;
+          softShadow.style.transform = `translate3d(${shadowX.toFixed(2)}px, ${shadowY.toFixed(2)}px, 0)`;
+          violetShadow.style.transform = `translate3d(${(shadowX * .48).toFixed(2)}px, ${(shadowY * .48).toFixed(2)}px, 0)`;
+          cyanShadow.style.transform = `translate3d(${(shadowX * .18).toFixed(2)}px, ${(shadowY * .18).toFixed(2)}px, 0)`;
+          requestAnimationFrame(animate);
+        };
+
+        window.addEventListener('pointermove', (event) => {
+          setPointer(event.clientX, event.clientY);
+        }, { passive: true });
+
+        window.addEventListener('pointerdown', (event) => {
+          if (event.pointerType !== 'mouse') {
+            touchActive = true;
+            setPointer(event.clientX, event.clientY);
+          }
+        }, { passive: true });
+
+        window.addEventListener('pointerup', () => {
+          touchActive = false;
+        }, { passive: true });
+
+        window.addEventListener('pointercancel', () => {
+          touchActive = false;
+        }, { passive: true });
+
+        if (hasTouchInput &&
+            typeof DeviceOrientationEvent !== 'undefined' &&
+            typeof DeviceOrientationEvent.requestPermission !== 'function') {
+          enableOrientation();
+        }
+
+        if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+          requestAnimationFrame(animate);
+        }
+      })();
+    </script>
+  </body>
+</html>
